@@ -31,7 +31,7 @@ class Newsletter2Go extends Module
     {
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
-        $this->version = '3.0.00';
+        $this->version = '3.0.01';
         $this->author = 'Newsletter2Go';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
