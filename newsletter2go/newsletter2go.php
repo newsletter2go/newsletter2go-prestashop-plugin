@@ -23,12 +23,11 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-
 class Newsletter2Go extends Module
 {
-
     public function __construct()
     {
+        $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
         $this->version = '3.0.01';
@@ -36,18 +35,14 @@ class Newsletter2Go extends Module
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
         $this->bootstrap = true;
-
         parent::__construct();
-
         $this->displayName = $this->l('Newsletter2Go email marketing');
         $this->description = $this->l('Synchronizes your newsletter subscribers and shop items with Newsletter2Go');
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
-
         if (!Configuration::get('NEWSLETTER2GO_NAME')) {
             $this->warning = $this->l('No name provided');
         }
     }
-
     public function install()
     {
         // Install Tabs
@@ -58,18 +53,14 @@ class Newsletter2Go extends Module
         $parent_tab->id_parent = 0; // Home tab
         $parent_tab->module = $this->name;
         $parent_tab->add();
-
         return parent::install() && $this->registerHook('backOfficeHeader');
     }
-
     public function uninstall()
     {
         $tab = new Tab((int)Tab::getIdFromClassName('Newsletter2GoTab'));
         $tab->delete();
-
         return parent::uninstall();
     }
-
     public function hookBackOfficeHeader()
     {//note the case of hook name
         $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js');
