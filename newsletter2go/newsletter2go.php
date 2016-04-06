@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -23,6 +23,7 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
+
 class Newsletter2Go extends Module
 {
     public function __construct()
@@ -43,6 +44,7 @@ class Newsletter2Go extends Module
             $this->warning = $this->l('No name provided');
         }
     }
+
     public function install()
     {
         // Install Tabs
@@ -53,16 +55,20 @@ class Newsletter2Go extends Module
         $parent_tab->id_parent = 0; // Home tab
         $parent_tab->module = $this->name;
         $parent_tab->add();
+
         return parent::install() && $this->registerHook('backOfficeHeader');
     }
+
     public function uninstall()
     {
         $tab = new Tab((int)Tab::getIdFromClassName('Newsletter2GoTab'));
         $tab->delete();
+
         return parent::uninstall();
     }
+
     public function hookBackOfficeHeader()
-    {//note the case of hook name
+    {
         $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js');
         $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css');
     }

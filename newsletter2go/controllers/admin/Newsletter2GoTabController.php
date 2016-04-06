@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -86,12 +86,12 @@ class Newsletter2GoTabController extends AdminController
         }
 
         $this->context->smarty->assign(array(
-            'web_services_api_key'      => $api_key,
-            'newsletter2go_api_key'     => Configuration::get('NEWSLETTER2GO_NL2GO_API_KEY'),
-            'url_post'                  => self::$currentIndex . '&token=' . $this->token,
-            'show_page_header_toolbar'  => $this->show_page_header_toolbar,
+            'web_services_api_key' => $api_key,
+            'newsletter2go_api_key' => Configuration::get('NEWSLETTER2GO_NL2GO_API_KEY'),
+            'url_post' => self::$currentIndex . '&token=' . $this->token,
+            'show_page_header_toolbar' => $this->show_page_header_toolbar,
             'page_header_toolbar_title' => $this->page_header_toolbar_title,
-            'page_header_toolbar_btn'   => $this->page_header_toolbar_btn,
+            'page_header_toolbar_btn' => $this->page_header_toolbar_btn,
         ));
 
         $this->setTemplate('newsletter2go.tpl');
@@ -121,7 +121,7 @@ class Newsletter2GoTabController extends AdminController
         $db_instance = Db::getInstance();
 
         $db_instance->insert('webservice_account', array(
-            'key'    => $api_key,
+            'key' => $api_key,
             'active' => '1',
         ));
         $account_id = $db_instance->Insert_ID();
@@ -129,20 +129,20 @@ class Newsletter2GoTabController extends AdminController
         $shop_id = (int)Context::getContext()->shop->id;
         $db_instance->insert('webservice_account_shop', array(
             'id_webservice_account' => $account_id,
-            'id_shop'               => $shop_id,
+            'id_shop' => $shop_id,
         ));
 
         $values = array(
             array(
-                'resource'              => 'customers',
-                'method'                => 'PUT',
+                'resource' => 'customers',
+                'method' => 'PUT',
                 'id_webservice_account' => $account_id,
             ),
         );
         foreach (array_keys($resources) as $resource) {
             $values[] = array(
-                'resource'              => $resource,
-                'method'                => 'GET',
+                'resource' => $resource,
+                'method' => 'GET',
                 'id_webservice_account' => $account_id,
             );
         }
@@ -188,11 +188,11 @@ class Newsletter2GoTabController extends AdminController
             'authentication' => Tools::jsonEncode(
                 array(
                     'apiKey' => Configuration::get('NEWSLETTER2GO_API_KEY'),
-                    'url'    => Tools::getHttpHost(true) . __PS_BASE_URI__,
+                    'url' => Tools::getHttpHost(true) . __PS_BASE_URI__,
                 )
             ),
-            'integration'    => 'PS',
-            'key'            => $apikey,
+            'integration' => 'PS',
+            'key' => $apikey,
         );
         $response = $client->createIntegration($language, $params);
 
