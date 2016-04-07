@@ -166,7 +166,8 @@ class Newsletter2GoExportModuleFrontController extends ModuleFrontController
      */
     protected function errorMessage($message = '', $code = 18)
     {
-        return simplexml_load_string('<?xml version="1.0" encoding="UTF-8" ?><prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+        return simplexml_load_string('<?xml version="1.0" encoding="UTF-8" ?>
+            <prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
             <errors><error><code><![CDATA[ ' . $code . ' ]]></code><message><![CDATA[ ' . $message . ' ]]></message>
             </error></errors></prestashop>');
     }
