@@ -31,11 +31,12 @@ class Newsletter2Go extends Module
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
-        $this->version = '3.0.01';
+        $this->version = '3.1.00';
         $this->author = 'Newsletter2Go';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
         $this->bootstrap = true;
+        $this->controllers = array('Export');
         parent::__construct();
         $this->displayName = $this->l('Newsletter2Go email marketing');
         $this->description = $this->l('Synchronizes your newsletter subscribers and shop items with Newsletter2Go');
@@ -56,7 +57,7 @@ class Newsletter2Go extends Module
         $parent_tab->module = $this->name;
         $parent_tab->add();
 
-        return parent::install() && $this->registerHook('backOfficeHeader');
+        return parent::install() && $this->registerUrls() && $this->registerHook('backOfficeHeader');
     }
 
     public function uninstall()
@@ -71,5 +72,27 @@ class Newsletter2Go extends Module
     {
         $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js');
         $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css');
+    }
+
+    /**
+     * Registers rewrite urls for frontend controller
+     * @return bool
+     */
+    public function registerUrls()
+    {
+        try {
+            foreach (Language::getLanguages() as $language) {
+                $data = Meta::getMetaByPage('module-newsletter2go-Export', $language['id_lang']);
+                $meta = new Meta($data['id_meta']);
+                if ($meta && $meta->id) {
+                    $meta->url_rewrite = 'n2go-export';
+                    $meta->save();
+                }
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
