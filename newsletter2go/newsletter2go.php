@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -23,6 +23,7 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
+
 class Newsletter2Go extends Module
 {
     public function __construct()
@@ -30,11 +31,12 @@ class Newsletter2Go extends Module
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
-        $this->version = '3.0.01';
+        $this->version = '3.1.00';
         $this->author = 'Newsletter2Go';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
         $this->bootstrap = true;
+        $this->controllers = array('Export');
         parent::__construct();
         $this->displayName = $this->l('Newsletter2Go email marketing');
         $this->description = $this->l('Synchronizes your newsletter subscribers and shop items with Newsletter2Go');
@@ -43,6 +45,7 @@ class Newsletter2Go extends Module
             $this->warning = $this->l('No name provided');
         }
     }
+
     public function install()
     {
         // Install Tabs
@@ -53,17 +56,43 @@ class Newsletter2Go extends Module
         $parent_tab->id_parent = 0; // Home tab
         $parent_tab->module = $this->name;
         $parent_tab->add();
-        return parent::install() && $this->registerHook('backOfficeHeader');
+
+        return parent::install() && $this->registerUrls() && $this->registerHook('backOfficeHeader');
     }
+
     public function uninstall()
     {
         $tab = new Tab((int)Tab::getIdFromClassName('Newsletter2GoTab'));
         $tab->delete();
+
         return parent::uninstall();
     }
+
     public function hookBackOfficeHeader()
-    {//note the case of hook name
+    {
         $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js');
         $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css');
+    }
+
+    /**
+     * Registers rewrite urls for frontend controller
+     * @return bool
+     */
+    public function registerUrls()
+    {
+        try {
+            foreach (Language::getLanguages() as $language) {
+                $data = Meta::getMetaByPage('module-newsletter2go-Export', $language['id_lang']);
+                $meta = new Meta($data['id_meta']);
+                if ($meta && $meta->id) {
+                    $meta->url_rewrite = 'n2go-export';
+                    $meta->save();
+                }
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
