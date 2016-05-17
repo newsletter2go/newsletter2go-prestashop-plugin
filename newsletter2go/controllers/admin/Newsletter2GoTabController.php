@@ -57,37 +57,8 @@ class Newsletter2GoTabController extends AdminController
             $this->createNewServiceAccount();
         }
 
-        $helpArray = array('newsletter2go_success_integration' => self::INTEGRATION_CREATED);
-        if (Tools::isSubmit('submitEnterKey')) {
-            $newsletter2go_key = Tools::getValue('apikey');
-            $language = Tools::getValue('language');
-            Configuration::updateValue('NEWSLETTER2GO_NL2GO_API_KEY', $newsletter2go_key);
-            Configuration::updateValue('NEWSLETTER2GO_NL2GO_LANG', $language);
-
-            if ($this->createIntegration($newsletter2go_key, $language)) {
-                $this->context->smarty->assign($helpArray);
-            }
-        } elseif (Tools::isSubmit('submitCreateAccount')) {
-            $email = Tools::getValue('email');
-            $language = Tools::getValue('language');
-            Configuration::updateValue('NEWSLETTER2GO_NL2GO_LANG', $language);
-
-            $newsletter2go_key = $this->createNewUser($email, $language);
-            if ($newsletter2go_key) {
-                $helpStr = "Newsletter2Go account with email '$email' created successfully!";
-                $this->context->smarty->assign(array('newsletter2go_success_user' => $helpStr));
-                Configuration::updateValue('NEWSLETTER2GO_NL2GO_API_KEY', $newsletter2go_key['value']);
-                if ($this->createIntegration($newsletter2go_key['value'], $language)) {
-                    $this->context->smarty->assign($helpArray);
-                }
-            }
-        } elseif (Tools::isSubmit('submitRemoveKey')) {
-            Configuration::deleteByName('NEWSLETTER2GO_NL2GO_API_KEY');
-        }
-
         $this->context->smarty->assign(array(
             'web_services_api_key' => $api_key,
-            'newsletter2go_api_key' => Configuration::get('NEWSLETTER2GO_NL2GO_API_KEY'),
             'url_post' => self::$currentIndex . '&token=' . $this->token,
             'show_page_header_toolbar' => $this->show_page_header_toolbar,
             'page_header_toolbar_title' => $this->page_header_toolbar_title,
@@ -169,50 +140,5 @@ class Newsletter2GoTabController extends AdminController
         $api_key = $this->createNewServiceAccount();
 
         die($api_key);
-    }
-
-    private function createNewUser($email, $language)
-    {
-        require_once dirname(__FILE__) . DS . '..' . DS . '..' . DS . 'lib' . DS . 'newsletter2goApiClient.php';
-        $client = new Newsletter2GoApiClient();
-        $user = $client->createAccount($language, array('user_mail' => $email));
-
-        return $this->checkResponse($user) ? $user : null;
-    }
-
-    private function createIntegration($apikey, $language)
-    {
-        require_once dirname(__FILE__) . DS . '..' . DS . '..' . DS . 'lib' . DS . 'newsletter2goApiClient.php';
-        $client = new Newsletter2GoApiClient();
-        $params = array(
-            'authentication' => Tools::jsonEncode(
-                array(
-                    'apiKey' => Configuration::get('NEWSLETTER2GO_API_KEY'),
-                    'url' => Tools::getHttpHost(true) . __PS_BASE_URI__,
-                )
-            ),
-            'integration' => 'PS',
-            'key' => $apikey,
-        );
-        $response = $client->createIntegration($language, $params);
-
-        return $this->checkResponse($response) ? $response : null;
-    }
-
-    private function checkResponse($response)
-    {
-        if (!$response) {
-            $this->context->smarty->assign(array('newsletter2go_error' => 'Curl response empty!'));
-
-            return false;
-        }
-
-        if (!$response['success']) {
-            $this->context->smarty->assign(array('newsletter2go_error' => 'Curl call failed! ' . $response['reason']));
-
-            return false;
-        }
-
-        return true;
     }
 }

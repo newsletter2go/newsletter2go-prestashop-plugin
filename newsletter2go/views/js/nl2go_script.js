@@ -44,4 +44,16 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#nl2goConnectButton').on('click', function () {
+        var baseUrl = 'https://www.newsletter2go.com/integrations/#/integration/PS',
+            params = {
+                version: 3000,
+                apiKey: document.getElementById("apikey").value,
+                language: document.getElementById("language").value,
+                url: document.getElementById("base_url").value
+            };
+
+        window.open(baseUrl + '?' + $.param(params), '_blank');
+    });
 });

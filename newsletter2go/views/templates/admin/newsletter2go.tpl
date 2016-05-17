@@ -40,7 +40,7 @@
 {/if}
 <div class="form-horizontal">
     <div class="panel">
-        <div class="panel-heading"><i class="icon-cogs"></i>{l s='Webservice Accounts' mod='newsletter2go'}</div>
+        <div class="panel-heading"><i class="icon-cogs" style="margin-right: 10px"></i>{l s='Webservice Accounts' mod='newsletter2go'}</div>
         <div class="form-wrapper">
             <div class="form-group">
                 <label class="control-label col-lg-3 required" style="text-align: right;">
@@ -65,132 +65,25 @@
         </div>
     </div>
 </div>
-<form action="index.php?controller=Newsletter2GoTab&token={$token|addslashes|escape:'htmlall':'UTF-8'}" method="POST">
-    {if !$newsletter2go_api_key}
-        <div class="form-horizontal">
-            <div class="panel">
-                <div class="panel-heading"><i class="icon-cogs"></i>{l s='Enter Newsletter2Go API Key' mod='newsletter2go'}</div>
-                <div class="form-wrapper">
-                    <div class="form-group">
-                        <label class="control-label col-lg-3 required" style="text-align: right;">
-                            <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
-                                {l s='API key' mod='newsletter2go'}
-                            </span>
-                        </label>
-                        <div class="col-lg-9">
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <input type="text" name="apikey" id="apikey" value="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-wrapper">
-                    <div class="form-group">
-                        <label class="control-label col-lg-3 required" style="text-align: right;">
-                            <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
-                                {l s='Language' mod='newsletter2go'}
-                            </span>
-                        </label>
-                        <div class="col-lg-3">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <select name="language" value="en">
-                                        <option value="en">{l s='English' mod='newsletter2go'}</option>
-                                        <option value="de">{l s='Deutsch' mod='newsletter2go'}</option>
-                                        <option value="fr">{l s='Franch' mod='newsletter2go'}</option>
-                                        <option value="es">{l s='Espanol' mod='newsletter2go'}</option>
-                                        <option value="nl">{l s='Dutch' mod='newsletter2go'}</option>
-                                        <option value="it">{l s='Italian' mod='newsletter2go'}</option>
-                                        <option value="pl">{l s='Polish' mod='newsletter2go'}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <button type="submit" class="btn btn-default pull-right" name="submitEnterKey"><i class="process-icon-save"></i> Save</button>
+<div class="form-horizontal">
+    <div class="panel">
+        <div class="panel-heading"><i class="icon-cogs" style="margin-right: 10px"></i>{l s='Connect' mod='newsletter2go'}</div>
+        <div class="form-wrapper">
+            <div class="form-group">
+                <label class="control-label col-lg-3" style="text-align: right;">
+                    <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
+                        {l s='Register Integration: ' mod='newsletter2go'}
+                    </span>
+                </label>
+                <div class="col-lg-9">
+                    <input type="hidden" id="apikey" value="{$web_services_api_key|escape:'htmlall':'UTF-8'}">
+                    <input type="hidden" id="language" value="{$lang_iso|escape:'htmlall':'UTF-8'}">
+                    <input type="hidden" id="base_url" value="{$base_url|escape:'htmlall':'UTF-8'}">
+                    <button type="button" class="btn btn-default" id="nl2goConnectButton">
+                        {l s='Connect to Newsletter2Go!' mod='newsletter2go'}
+                    </button>
                 </div>
             </div>
         </div>
-
-        <div class="form-horizontal">
-            <div class="panel">
-                <div class="panel-heading"><i class="icon-cogs"></i>{l s='Create New Newsletter2Go Account' mod='newsletter2go'}</div>
-                <div class="form-wrapper">
-                    <div class="form-group">
-                        <label class="control-label col-lg-3 required" style="text-align: right;">
-                            <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
-                                {l s='E-mail address' mod='newsletter2go'}
-                            </span>
-                        </label>
-                        <div class="col-lg-9 ">
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <input type="text" name="email" id="email" value="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-wrapper">
-                    <div class="form-group">
-                        <label class="control-label col-lg-3 required" style="text-align: right;">
-                            <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
-                                {l s='Language' mod='newsletter2go'}
-                            </span>
-                        </label>
-                        <div class="col-lg-3">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <select name="language" value="en">
-                                        <option value="en">{l s='English' mod='newsletter2go'}</option>
-                                        <option value="de">{l s='Deutsch' mod='newsletter2go'}</option>
-                                        <option value="fr">{l s='Franch' mod='newsletter2go'}</option>
-                                        <option value="es">{l s='Espanol' mod='newsletter2go'}</option>
-                                        <option value="nl">{l s='Dutch' mod='newsletter2go'}</option>
-                                        <option value="it">{l s='Italian' mod='newsletter2go'}</option>
-                                        <option value="pl">{l s='Polish' mod='newsletter2go'}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <button type="submit" class="btn btn-default pull-right" name="submitCreateAccount"><i class="process-icon-save"></i> Save</button>
-                </div>
-            </div>
-
-        </div>
-    {else}
-        <div class="form-horizontal">
-            <div class="panel">
-                <div class="panel-heading"><i class="icon-cogs"></i>{l s='Newsletter2Go API Key' mod='newsletter2go'}</div>
-                <div class="form-wrapper">
-                    <div class="form-group">
-                        <label class="control-label col-lg-3 required" style="text-align: right;">
-                            <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
-                                {l s='API key' mod='newsletter2go'}
-                            </span>
-                        </label>
-                        <div class="col-lg-9 ">
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <input type="text" name="apikey" id="apikey" value="{$newsletter2go_api_key|escape:'htmlall':'UTF-8'}" readonly="true">
-                                </div>
-                                <div class="col-lg-2">
-                                    <button type="submit" class="btn btn-default" id="nl2goRemoveButton" name="submitRemoveKey">
-                                        {l s='Remove API Key' mod='newsletter2go'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {/if}
-</form>
+    </div>
+</div>
