@@ -72,7 +72,7 @@
             <div class="form-group">
                 <label class="control-label col-lg-3" style="text-align: right;">
                     <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="" data-original-title="">
-                        {l s='Register Integration: ' mod='newsletter2go'}
+                        {l s='Connect to Newsletter2Go' mod='newsletter2go'}
                     </span>
                 </label>
                 <div class="col-lg-9">
@@ -80,7 +80,7 @@
                     <input type="hidden" id="language" value="{$lang_iso|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="base_url" value="{$base_url|escape:'htmlall':'UTF-8'}">
                     <button type="button" class="btn btn-default" id="nl2goConnectButton">
-                        {l s='Connect to Newsletter2Go!' mod='newsletter2go'}
+                        {l s='connect' mod='newsletter2go'}
                     </button>
                 </div>
             </div>

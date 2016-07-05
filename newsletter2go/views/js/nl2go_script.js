@@ -46,7 +46,7 @@ $(document).ready(function () {
     });
 
     $('#nl2goConnectButton').on('click', function () {
-        var baseUrl = 'https://www.newsletter2go.com/integrations/#/integration/PS',
+        var baseUrl = 'https://ui.newsletter2go.com/integrations/connect/PS/',
             params = {
                 version: 3000,
                 apiKey: document.getElementById("apikey").value,
