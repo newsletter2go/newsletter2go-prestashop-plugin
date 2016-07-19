@@ -57,8 +57,11 @@ class Newsletter2GoTabController extends AdminController
             $this->createNewServiceAccount();
         }
 
+        $version = $this->getPluginVersion();
+
         $this->context->smarty->assign(array(
             'web_services_api_key' => $api_key,
+            'plugin_version' => $version,
             'url_post' => self::$currentIndex . '&token=' . $this->token,
             'show_page_header_toolbar' => $this->show_page_header_toolbar,
             'page_header_toolbar_title' => $this->page_header_toolbar_title,
@@ -140,5 +143,18 @@ class Newsletter2GoTabController extends AdminController
         $api_key = $this->createNewServiceAccount();
 
         die($api_key);
+    }
+
+    /**
+     * Retrieves version of the installed module
+     * @return string
+     */
+    protected function getPluginVersion()
+    {
+        $module = Module::getInstanceByName('newsletter2go');
+
+        $version =  str_replace('.', '', $module->version);
+
+        return $version;
     }
 }
