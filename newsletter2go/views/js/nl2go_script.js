@@ -38,7 +38,8 @@ $(document).ready(function () {
                 'action': 'generateNewApiKey'
             },
             success: function (response) {
-                $('#code').val(response);
+                $('#code').attr('value', response);
+                $('#apikey').attr('value', response);
                 $('#codeLoader').css('display', 'none');
                 $('#code').css('display', 'block');
             }
@@ -48,7 +49,7 @@ $(document).ready(function () {
     $('#nl2goConnectButton').on('click', function () {
         var baseUrl = 'https://ui.newsletter2go.com/integrations/connect/PS/',
             params = {
-                version: 3000,
+                version: document.getElementById("version").value,
                 apiKey: document.getElementById("apikey").value,
                 language: document.getElementById("language").value,
                 url: document.getElementById("base_url").value
