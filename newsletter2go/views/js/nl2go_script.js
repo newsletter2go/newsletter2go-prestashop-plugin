@@ -49,7 +49,8 @@ $(document).ready(function () {
     $('#nl2goConnectButton').on('click', function () {
         var baseUrl = 'https://ui.newsletter2go.com/integrations/connect/PS/',
             params = {
-                version: document.getElementById("version").value,
+                //ignore version to create latest version of connector
+                //version: document.getElementById("version").value,
                 apiKey: document.getElementById("apikey").value,
                 language: document.getElementById("language").value,
                 url: document.getElementById("base_url").value

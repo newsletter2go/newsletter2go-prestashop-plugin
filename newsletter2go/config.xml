@@ -2,7 +2,7 @@
 <module>
 	<name>newsletter2go</name>
 	<displayName><![CDATA[Newsletter2Go email marketing]]></displayName>
-	<version><![CDATA[4.0.00]]></version>
+	<version><![CDATA[4.0.01]]></version>
 	<description><![CDATA[Synchronizes your newsletter subscribers and shop items with Newsletter2Go]]></description>
 	<author><![CDATA[Newsletter2Go]]></author>
 	<tab><![CDATA[advertising_marketing]]></tab>
