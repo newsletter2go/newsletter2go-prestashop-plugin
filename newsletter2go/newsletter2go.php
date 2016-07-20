@@ -31,7 +31,7 @@ class Newsletter2Go extends Module
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
-        $this->version = '4.0.00';
+        $this->version = '4.0.01';
         $this->author = 'Newsletter2Go';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
@@ -39,7 +39,7 @@ class Newsletter2Go extends Module
         $this->controllers = array('Export');
         parent::__construct();
         $this->displayName = $this->l('Newsletter2Go email marketing');
-        $this->description = $this->l('Synchronizes your newsletter subscribers and shop items with Newsletter2Go');
+        $this->description = $this->l('Adds email marketing functionality to your E-commerce platform. Easily synchronize your contacts and send product newsletters');
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
         if (!Configuration::get('NEWSLETTER2GO_NAME')) {
             $this->warning = $this->l('No name provided');
