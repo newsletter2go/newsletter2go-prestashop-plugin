@@ -76,7 +76,6 @@
                     </span>
                 </label>
                 <div class="col-lg-9">
-                    <input type="hidden" id="apikey" value="{$web_services_api_key|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="language" value="{$lang_iso|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="base_url" value="{$base_url|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="version" value="{$plugin_version|escape:'htmlall':'UTF-8'}">
