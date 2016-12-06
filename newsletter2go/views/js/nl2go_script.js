@@ -23,39 +23,44 @@
  *  International Registered Trademark & Property of PrestaShop SA
  */
 
-$(document).ready(function () {
-    $('#nl2goGenerateButton').on('click', function () {
-        $('#codeLoader').css('display', 'block');
-        $('#code').css('display', 'none');
-        $.ajax({
-            url: 'index.php',
-            cache: false,
-            type: 'POST',
-            data: {
-                'token': token,
-                'ajax': 1,
-                'tab': 'Newsletter2GoTab',
-                'action': 'generateNewApiKey'
-            },
-            success: function (response) {
-                $('#code').attr('value', response);
-                $('#apikey').attr('value', response);
-                $('#codeLoader').css('display', 'none');
-                $('#code').css('display', 'block');
-            }
-        });
-    });
+window.addEventListener('load', function () {
+    var generate = document.getElementById('nl2goGenerateButton'),
+        code = document.getElementById('code'),
+        codeLoader = document.getElementById('codeLoader'),
+        connect = document.getElementById('nl2goConnectButton');
 
-    $('#nl2goConnectButton').on('click', function () {
+    connect.addEventListener('click', function () {
         var baseUrl = 'https://ui.newsletter2go.com/integrations/connect/PS/',
             params = {
                 //ignore version to create latest version of connector
                 //version: document.getElementById("version").value,
-                apiKey: document.getElementById("apikey").value,
-                language: document.getElementById("language").value,
-                url: document.getElementById("base_url").value
+                apiKey: code.value,
+                language: document.getElementById('language').value,
+                url: document.getElementById('base_url').value
             };
 
-        window.open(baseUrl + '?' + $.param(params), '_blank');
+        window.open(baseUrl + '?' + 'version=' + params.version + '&' + 'apiKey=' + params.apiKey + '&' + 'language=' + params.language + '&' + 'url=' + params.url, '_blank');
+    });
+
+    generate.addEventListener('click', function ajax() {
+        var xmlHttp = new XMLHttpRequest(),
+            parameters = 'token=token&ajax=a&tab=Newsletter2GoTab&action=generateNewApiKey';
+
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == XMLHttpRequest.DONE) {
+                if (xmlHttp.status == 200) {
+                    code.value = xmlHttp.responseText;
+                } else {
+                    alert('An error occurred while generating new API key, http code 200 expected.');
+                }
+
+                codeLoader.style.display = 'none';
+                code.style.display = 'block';
+            }
+        };
+
+        xmlHttp.open('POST', 'index.php', true);
+        xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttp.send(parameters);
     });
 });

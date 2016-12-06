@@ -49,13 +49,21 @@ class Newsletter2Go extends Module
     public function install()
     {
         // Install Tabs
-        $parent_tab = new Tab();
+        $tab = new Tab();
         // Need a foreach for the language
-        $parent_tab->name[(int)Configuration::get('PS_LANG_DEFAULT')] = $this->l('Newsletter2Go');
-        $parent_tab->class_name = 'Newsletter2GoTab';
-        $parent_tab->id_parent = 0; // Home tab
-        $parent_tab->module = $this->name;
-        $parent_tab->add();
+        $tab->name[(int)Configuration::get('PS_LANG_DEFAULT')] = $this->l('Newsletter2Go');
+        $tab->class_name = 'Newsletter2GoTab';
+		// Set parent tab id
+        $parent_id = (_PS_VERSION_ >= '1.7.0.0' ? (int)Tab::getIdFromClassName('CONFIGURE') : 0);
+		$tab->id_parent = $parent_id;
+        $tab->module = $this->name;
+        $tab->add();
+
+        // Set icon image when menu is collapsed
+        if (_PS_VERSION_ >= '1.7') {
+            $db = Db::getInstance();
+            $db->update('tab', array('icon' => 'sms'), 'id_tab = ' . $tab->id);
+        }
 
         return parent::install() && $this->registerUrls() && $this->registerHook('backOfficeHeader');
     }
@@ -95,4 +103,5 @@ class Newsletter2Go extends Module
 
         return true;
     }
+	
 }
