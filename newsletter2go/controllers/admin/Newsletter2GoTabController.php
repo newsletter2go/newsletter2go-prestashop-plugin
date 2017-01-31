@@ -126,6 +126,12 @@ class Newsletter2GoTabController extends AdminController
         Configuration::updateValue('NEWSLETTER2GO_API_ACCOUNT', $account_id);
         Configuration::updateValue('PS_WEBSERVICE', 1);
 
+        //enables fast-CGI option if it is supported by the server
+        $sapi = php_sapi_name();
+        if (strpos($sapi, 'cgi') !== false) {
+            Configuration::updateValue('PS_WEBSERVICE_CGI_HOST', 1);
+        }
+
         return $api_key;
     }
 
@@ -141,12 +147,6 @@ class Newsletter2GoTabController extends AdminController
 
         //apply new settings
         $api_key = $this->createNewServiceAccount();
-
-        //enables fast-CGI option if it is supported by the server
-        $sapi = php_sapi_name();
-        if (strpos($sapi, 'cgi') !== false) {
-            Configuration::updateValue('PS_WEBSERVICE_CGI_HOST', 1);
-        }
 
         die($api_key);
     }
