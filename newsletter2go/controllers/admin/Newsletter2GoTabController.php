@@ -54,7 +54,7 @@ class Newsletter2GoTabController extends AdminController
 
         $api_key = Configuration::get('NEWSLETTER2GO_API_KEY');
         if (!$api_key) {
-            $this->createNewServiceAccount();
+            $api_key = $this->createNewServiceAccount();
         }
 
         $version = $this->getPluginVersion();
