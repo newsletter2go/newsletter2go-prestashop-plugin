@@ -70,6 +70,15 @@ class Newsletter2Go extends Module
 
     public function uninstall()
     {
+        // Deactivate the previous API key
+        $account_id = Configuration::get('NEWSLETTER2GO_API_ACCOUNT');
+        $db_instance = Db::getInstance();
+        $db_instance->update('webservice_account', array('active' => '0'), 'id_webservice_account = ' . $account_id);
+
+        // Remove values from configuration
+        Configuration::deleteByName('NEWSLETTER2GO_API_KEY');
+        Configuration::deleteByName('NEWSLETTER2GO_API_ACCOUNT');
+
         $tab = new Tab((int)Tab::getIdFromClassName('Newsletter2GoTab'));
         $tab->delete();
 
