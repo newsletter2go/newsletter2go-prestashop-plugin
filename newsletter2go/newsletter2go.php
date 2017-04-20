@@ -79,8 +79,9 @@ class Newsletter2Go extends Module
 
     public function hookBackOfficeHeader()
     {
-        $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js');
-        $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css');
+        $param = md5(time());
+        $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js?param=' . $param, false);
+        $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css?param=' . $param, 'all', null, false);
     }
 
     /**
