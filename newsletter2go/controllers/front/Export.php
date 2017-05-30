@@ -137,7 +137,8 @@ class Newsletter2GoExportModuleFrontController extends ModuleFrontController
      */
     protected function tableExists()
     {
-        $tableName = _DB_PREFIX_ . 'newsletter';
+        $tableName = _DB_PREFIX_;
+        $tableName .=  _PS_VERSION_ >= '1.7.0.0' ? 'emailsubscription' : 'newsletter';
         $db = Db::getInstance();
         $tableInfo = $db->getRow("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '$tableName'");
 
@@ -166,9 +167,13 @@ class Newsletter2GoExportModuleFrontController extends ModuleFrontController
      */
     protected function errorMessage($message = '', $code = 18)
     {
-        return simplexml_load_string('<?xml version="1.0" encoding="UTF-8" ?>
-            <prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
-            <errors><error><code><![CDATA[ ' . $code . ' ]]></code><message><![CDATA[ ' . $message . ' ]]></message>
-            </error></errors></prestashop>');
+        $xml = new SimpleXMLElement('<prestashop/>');
+        $xml->addAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+        $errorsNode = $xml->addChild('errors');
+        $errorNode = $errorsNode->addChild('error');
+        $errorNode->addChild('code', $code);
+        $errorNode->addChild('message', $message);
+
+        return $xml->asXML();
     }
 }

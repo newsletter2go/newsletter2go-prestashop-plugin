@@ -58,6 +58,10 @@ class NewsletterSubscriberCore extends ObjectModel
 
     public function getWebserviceObjectList($sql_join, $sql_filter, $sql_sort, $sql_limit)
     {
+        if (_PS_VERSION_ >= '1.7.0.0') {
+            $this->def['table'] = 'emailsubscription';
+        }
+
         $query = 'SELECT main.* FROM `' . _DB_PREFIX_ . bqSQL($this->def['table']) . '` AS main
 		' . $sql_join . '
 		WHERE 1 ' . $sql_filter . '
@@ -69,6 +73,10 @@ class NewsletterSubscriberCore extends ObjectModel
 
     public function getWebserviceObjectListCount($sql_filter)
     {
+        if (_PS_VERSION_ >= '1.7.0.0') {
+            $this->def['table'] = 'emailsubscription';
+        }
+        
         $query = 'SELECT COUNT(main.id) as total FROM `' . _DB_PREFIX_ . bqSQL($this->def['table']) . '` AS main
 		WHERE 1 ' . $sql_filter;
 
