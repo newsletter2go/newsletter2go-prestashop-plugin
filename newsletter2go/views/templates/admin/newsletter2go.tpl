@@ -79,6 +79,7 @@
                     <input type="hidden" id="apikey" value="{$web_services_api_key|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="language" value="{$lang_iso|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="base_url" value="{$base_url|escape:'htmlall':'UTF-8'}">
+                    <input type="hidden" id="callback_url" value="{$callback_url|escape:'htmlall':'UTF-8'}">
                     <input type="hidden" id="version" value="{$plugin_version|escape:'htmlall':'UTF-8'}">
                     <button type="button" class="btn btn-default" id="nl2goConnectButton">
                         {l s='connect' mod='newsletter2go'}

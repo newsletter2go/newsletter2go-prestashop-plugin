@@ -36,7 +36,7 @@ class Newsletter2Go extends Module
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
         $this->bootstrap = true;
-        $this->controllers = array('Export');
+        $this->controllers = array('Export', 'Callback');
         parent::__construct();
         $this->displayName = $this->l('Newsletter2Go email marketing');
         $this->description = $this->l('Adds email marketing functionality to your E-commerce platform. Easily synchronize your contacts and send product newsletters');
