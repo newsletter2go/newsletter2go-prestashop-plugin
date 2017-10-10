@@ -59,4 +59,36 @@ $(document).ready(function () {
 
         window.open(baseUrl + '?' + $.param(params), '_blank');
     });
+
+    $('#nl2goOrderTracking_on').on('click', function () {
+        $.ajax({
+            url: 'index.php',
+            cache: false,
+            type: 'POST',
+            data: {
+                'token': token,
+                'ajax': 1,
+                'tab': 'Newsletter2GoTab',
+                'action': 'trackingOrder',
+                'enable': '1'
+            },
+            success: function (response) {}
+        });
+    });
+
+    $('#nl2goOrderTracking_off').on('click', function () {
+        $.ajax({
+            url: 'index.php',
+            cache: false,
+            type: 'POST',
+            data: {
+                'token': token,
+                'ajax': 1,
+                'tab': 'Newsletter2GoTab',
+                'action': 'trackingOrder',
+                'enable': '0'
+            },
+            success: function (response) {}
+        });
+    });
 });

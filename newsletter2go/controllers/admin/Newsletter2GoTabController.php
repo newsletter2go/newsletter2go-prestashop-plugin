@@ -152,6 +152,13 @@ class Newsletter2GoTabController extends AdminController
         die($api_key);
     }
 
+    public function ajaxProcessTrackingOrder()
+    {
+        Configuration::updatevalue('NEWSLETTER2GO_TRACKING_ORDER', Tools::getValue('enable', '0'));
+
+        die();
+    }
+
     /**
      * Retrieves version of the installed module
      * @return string
