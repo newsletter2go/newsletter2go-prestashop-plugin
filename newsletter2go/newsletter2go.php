@@ -96,7 +96,7 @@ class Newsletter2Go extends Module
     {
         $companyId = Configuration::get('NEWSLETTER2GO_COMPANY_ID');
         if (!empty($companyId) && Configuration::get('NEWSLETTER2GO_TRACKING_ORDER') === '1') {
-            $order = $params['objOrder'];
+            echo $this->getTrackingScript($params['objOrder'], $companyId);
         }
     }
 
@@ -120,5 +120,58 @@ class Newsletter2Go extends Module
         }
 
         return true;
+    }
+
+    /**
+     * Create tracking script with order information
+     *
+     * @param $order
+     * @param $companyId
+     * @return string
+     */
+    private function getTrackingScript($order, $companyId)
+    {
+        $shop = $this->context->shop->getShop($order->id_shop);
+        $transactionData = [
+            'id' => (string)$order->id,
+            'affiliation' => (string)$shop['name'],
+            'revenue' => (string)round($order->total_paid, 2),
+            'shipping' => (string)round($order->total_shipping, 2),
+            'tax' => (string)round($order->total_paid - $order->total_paid_tax_excl, 2)
+        ];
+
+        $script = '<script id="n2g_script">
+            !function(e,t,n,c,r,a,i){
+                e.Newsletter2GoTrackingObject=r,
+                e[r]=e[r]||function(){(e[r].q=e[r].q||[]).push(arguments)},
+                e[r].l=1*new Date,
+                a=t.createElement(n),
+                i=t.getElementsByTagName(n)[0],
+                a.async=1,
+                a.src=c,
+                i.parentNode.insertBefore(a,i)
+            }
+            (window,document,"script","//static-sandbox.newsletter2go.com/utils.js","n2g");
+            n2g(\'create\', \'' . $companyId . '\');
+            n2g(\'ecommerce:addTransaction\', ' . json_encode($transactionData) . ');';
+
+        foreach ($order->getProducts() as $product) {
+            $category = new Category($product['id_category_default'], $order->id_lang);
+            $productData = [
+                'id' => (string)$product['id_order'],
+                'name' => (string)$product['product_name'],
+                'sku' => (string)$product['reference'],
+                'category' => (string)$category->name,
+                'price' => (string)round($product['total_wt'], 2),
+                'quantity' => (string)$product['product_quantity']
+            ];
+
+            $script .= "
+            n2g('ecommerce:addItem', " . json_encode($productData) . ");";
+        }
+
+        return $script . '
+            n2g(\'ecommerce:send\')
+        </script>';
     }
 }
