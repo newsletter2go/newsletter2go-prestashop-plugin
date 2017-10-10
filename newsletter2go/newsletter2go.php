@@ -57,7 +57,10 @@ class Newsletter2Go extends Module
         $parent_tab->module = $this->name;
         $parent_tab->add();
 
-        return parent::install() && $this->registerUrls() && $this->registerHook('backOfficeHeader');
+        return parent::install()
+            && $this->registerUrls()
+            && $this->registerHook('backOfficeHeader')
+            && $this->registerHook('displayOrderConfirmation');
     }
 
     public function uninstall()
@@ -82,6 +85,19 @@ class Newsletter2Go extends Module
         $param = md5(time());
         $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js?param=' . $param, false);
         $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css?param=' . $param, 'all', null, false);
+    }
+
+    /**
+     *  Hook for new order creation
+     *
+     * @param $params
+     */
+    public function hookDisplayOrderConfirmation($params)
+    {
+        $companyId = Configuration::get('NEWSLETTER2GO_COMPANY_ID');
+        if (!empty($companyId) && Configuration::get('NEWSLETTER2GO_TRACKING_ORDER') === '1') {
+            $order = $params['objOrder'];
+        }
     }
 
     /**
