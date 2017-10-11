@@ -54,7 +54,7 @@ $(document).ready(function () {
                 apiKey: document.getElementById("apikey").value,
                 language: document.getElementById("language").value,
                 url: document.getElementById("base_url").value,
-                callbackUrl: document.getElementById("callback_url").value
+                callback: document.getElementById("callback_url").value
             };
 
         window.open(baseUrl + '?' + $.param(params), '_blank');
