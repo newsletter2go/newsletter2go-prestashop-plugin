@@ -26,6 +26,9 @@
 
 class Newsletter2Go extends Module
 {
+    
+    const CONFIG = array('API_KEY', 'API_ACCOUNT', 'AUTH_KEY', 'ACCESS_TOKEN', 'REFRESH_TOKEN', 'COMPANY_ID', 'TRACKING_ORDER');
+    
     public function __construct()
     {
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
@@ -71,8 +74,7 @@ class Newsletter2Go extends Module
         $db_instance->update('webservice_account', array('active' => '0'), 'id_webservice_account = ' . $account_id);
 
         // Remove values from configuration
-        Configuration::deleteByName('NEWSLETTER2GO_API_KEY');
-        Configuration::deleteByName('NEWSLETTER2GO_API_ACCOUNT');
+        $this->deleteConfig();
 
         $tab = new Tab((int)Tab::getIdFromClassName('Newsletter2GoTab'));
         $tab->delete();
@@ -120,6 +122,16 @@ class Newsletter2Go extends Module
         }
 
         return true;
+    }
+
+    /**
+     * Delete values from config
+     */
+    private function deleteConfig()
+    {
+        foreach (self::CONFIG as $configName) {
+            Configuration::deleteByName("NEWSLETTER2GO_$configName");
+        }
     }
 
     /**
