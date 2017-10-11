@@ -101,9 +101,9 @@
                 </label>
                 <div class="col-lg-9">
                     <span class="switch prestashop-switch fixed-width-lg">
-                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_on" value="1" checked="checked">
+                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_on" value="1" {if $enable_tracking}checked="checked"{/if}>
                         <label for="nl2goOrderTracking_on" class="radioCheck">{l s='Yes'}</label>
-                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_off" value="0">
+                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_off" value="0" {if !$enable_tracking}checked="checked"{/if}>
                         <label for="nl2goOrderTracking_off" class="radioCheck">{l s='No'}</label>
                         <a class="slide-button btn"></a>
                     </span>
