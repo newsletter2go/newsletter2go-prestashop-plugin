@@ -27,14 +27,14 @@
 class Newsletter2Go extends Module
 {
     
-    const CONFIG = array('API_KEY', 'API_ACCOUNT', 'AUTH_KEY', 'ACCESS_TOKEN', 'REFRESH_TOKEN', 'COMPANY_ID', 'TRACKING_ORDER');
+    private $configNames = array('API_KEY', 'API_ACCOUNT', 'AUTH_KEY', 'ACCESS_TOKEN', 'REFRESH_TOKEN', 'COMPANY_ID', 'TRACKING_ORDER');
     
     public function __construct()
     {
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
-        $this->version = '4.0.01';
+        $this->version = '4.1.00';
         $this->author = 'Newsletter2Go';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
@@ -129,7 +129,7 @@ class Newsletter2Go extends Module
      */
     private function deleteConfig()
     {
-        foreach (self::CONFIG as $configName) {
+        foreach ($this->configNames as $configName) {
             Configuration::deleteByName("NEWSLETTER2GO_$configName");
         }
     }
@@ -144,13 +144,13 @@ class Newsletter2Go extends Module
     private function getTrackingScript($order, $companyId)
     {
         $shop = $this->context->shop->getShop($order->id_shop);
-        $transactionData = [
+        $transactionData = array(
             'id' => (string)$order->id,
             'affiliation' => (string)$shop['name'],
             'revenue' => (string)round($order->total_paid, 2),
             'shipping' => (string)round($order->total_shipping, 2),
             'tax' => (string)round($order->total_paid - $order->total_paid_tax_excl, 2)
-        ];
+        );
 
         $script = '<script id="n2g_script">
             !function(e,t,n,c,r,a,i){
@@ -169,14 +169,14 @@ class Newsletter2Go extends Module
 
         foreach ($order->getProducts() as $product) {
             $category = new Category($product['id_category_default'], $order->id_lang);
-            $productData = [
+            $productData = array(
                 'id' => (string)$product['id_order'],
                 'name' => (string)$product['product_name'],
                 'sku' => (string)$product['reference'],
                 'category' => (string)$category->name,
                 'price' => (string)round($product['total_wt'], 2),
                 'quantity' => (string)$product['product_quantity']
-            ];
+            );
 
             $script .= "
             n2g('ecommerce:addItem', " . json_encode($productData) . ");";
