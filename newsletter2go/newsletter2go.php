@@ -34,7 +34,7 @@ class Newsletter2Go extends Module
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
         $this->name = 'newsletter2go';
         $this->tab = 'advertising_marketing';
-        $this->version = '4.1.00';
+        $this->version = '4.0.04';
         $this->author = 'Newsletter2Go';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
@@ -163,7 +163,7 @@ class Newsletter2Go extends Module
                 a.src=c,
                 i.parentNode.insertBefore(a,i)
             }
-            (window,document,"script","//static-sandbox.newsletter2go.com/utils.js","n2g");
+            (window,document,"script","//static.newsletter2go.com/utils.js","n2g");
             n2g(\'create\', \'' . $companyId . '\');
             n2g(\'ecommerce:addTransaction\', ' . json_encode($transactionData) . ');';
 
