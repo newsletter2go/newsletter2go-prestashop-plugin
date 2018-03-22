@@ -1,5 +1,5 @@
 {*
-* 2007-2016 PrestaShop
+* 2007-2018 PrestaShop
 *
 * NOTICE OF LICENSE
 *
@@ -18,29 +18,35 @@
 * needs please refer to http://www.prestashop.com for more information.
 *
 *  @author    PrestaShop SA <contact@prestashop.com>
-*  @copyright 2007-2016 PrestaShop SA
+*  @copyright 2007-2018 PrestaShop SA
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
+
 {if isset($newsletter2go_error)}
     <div class="row">
-        <div class="col-lg-9" style="text-align: center; color: red;"><h2>{l s='Error: ' mod='newsletter2go'}{$newsletter2go_error|escape:'htmlall':'UTF-8'}</h2></div>
+        <div class="col-lg-9" style="text-align: center; color: red;">
+            <h2>{l s='Error: ' mod='newsletter2go'}{$newsletter2go_error|escape:'htmlall':'UTF-8'}</h2></div>
     </div>
 {/if}
 {if isset($newsletter2go_success_user)}
     <div class="row">
-        <div class="col-lg-9" style="text-align: center; color: #8bc954;"><h2>{$newsletter2go_success_user|escape:'htmlall':'UTF-8'}</h2></div>
+        <div class="col-lg-9" style="text-align: center; color: #8bc954;">
+            <h2>{$newsletter2go_success_user|escape:'htmlall':'UTF-8'}</h2></div>
     </div>
 {/if}
 {if isset($newsletter2go_success_integration)}
     <div class="row">
-        <div class="col-lg-9" style="text-align: center; color: #8bc954;"><h2>{$newsletter2go_success_integration|escape:'htmlall':'UTF-8'}</h2></div>
+        <div class="col-lg-9" style="text-align: center; color: #8bc954;">
+            <h2>{$newsletter2go_success_integration|escape:'htmlall':'UTF-8'}</h2></div>
     </div>
 {/if}
 <div class="form-horizontal">
     <div class="panel">
-        <div class="panel-heading"><i class="icon-cogs" style="margin-right: 10px"></i>{l s='Webservice Accounts' mod='newsletter2go'}</div>
+        <div class="panel-heading"><i class="icon-cogs"
+                                      style="margin-right: 10px"></i>{l s='Webservice Accounts' mod='newsletter2go'}
+        </div>
         <div class="form-wrapper">
             <div class="form-group">
                 <label class="control-label col-lg-3 required" style="text-align: right;">
@@ -51,8 +57,9 @@
                 <div class="col-lg-9 ">
                     <div class="row">
                         <div class="col-lg-5">
-                            <img src="../img/admin/ajax-loader.gif" alt="" id="codeLoader" style="display: none;" />
-                            <input type="text" name="key" id="code" value="{$web_services_api_key|escape:'htmlall':'UTF-8'}" readonly="true">
+                            <img src="../img/admin/ajax-loader.gif" alt="" id="codeLoader" style="display: none;"/>
+                            <input type="text" name="key" id="code"
+                                   value="{$web_services_api_key|escape:'htmlall':'UTF-8'}" readonly="true">
                         </div>
                         <div class="col-lg-2">
                             <button type="button" class="btn btn-default" id="nl2goGenerateButton">
@@ -67,7 +74,8 @@
 </div>
 <div class="form-horizontal">
     <div class="panel">
-        <div class="panel-heading"><i class="icon-cogs" style="margin-right: 10px"></i>{l s='Connect' mod='newsletter2go'}</div>
+        <div class="panel-heading"><i class="icon-cogs"
+                                      style="margin-right: 10px"></i>{l s='Connect' mod='newsletter2go'}</div>
         <div class="form-wrapper">
             <div class="form-group">
                 <label class="control-label col-lg-3" style="text-align: right;">
@@ -91,7 +99,9 @@
 </div>
 <div class="form-horizontal">
     <div class="panel">
-        <div class="panel-heading"><i class="icon-cogs" style="margin-right: 10px"></i>{l s='Conversion Tracking' mod='newsletter2go'}</div>
+        <div class="panel-heading"><i class="icon-cogs"
+                                      style="margin-right: 10px"></i>{l s='Conversion Tracking' mod='newsletter2go'}
+        </div>
         <div class="form-wrapper">
             <div class="form-group">
                 <label class="control-label col-lg-3" style="text-align: right;">
@@ -101,10 +111,12 @@
                 </label>
                 <div class="col-lg-9">
                     <span class="switch prestashop-switch fixed-width-lg">
-                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_on" value="1" {if $enable_tracking}checked="checked"{/if}>
-                        <label for="nl2goOrderTracking_on" class="radioCheck">{l s='Yes'}</label>
-                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_off" value="0" {if !$enable_tracking}checked="checked"{/if}>
-                        <label for="nl2goOrderTracking_off" class="radioCheck">{l s='No'}</label>
+                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_on" value="1"
+                               {if $enable_tracking}checked="checked"{/if}>
+                        <label for="nl2goOrderTracking_on" class="radioCheck">{l s='Yes' mod='newsletter2go'}</label>
+                        <input type="radio" name="nl2goOrderTracking" id="nl2goOrderTracking_off" value="0"
+                               {if !$enable_tracking}checked="checked"{/if}>
+                        <label for="nl2goOrderTracking_off" class="radioCheck">{l s='No' mod='newsletter2go'}</label>
                         <a class="slide-button btn"></a>
                     </span>
                 </div>

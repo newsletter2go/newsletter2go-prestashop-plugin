@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2016 PrestaShop
+ * 2007-2018 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -19,16 +19,24 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2015 PrestaShop SA
+ * @copyright 2007-2018 PrestaShop SA
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
 
 class Newsletter2Go extends Module
 {
-    
-    private $configNames = array('API_KEY', 'API_ACCOUNT', 'AUTH_KEY', 'ACCESS_TOKEN', 'REFRESH_TOKEN', 'COMPANY_ID', 'TRACKING_ORDER');
-    
+
+    private $configNames = array(
+        'API_KEY',
+        'API_ACCOUNT',
+        'AUTH_KEY',
+        'ACCESS_TOKEN',
+        'REFRESH_TOKEN',
+        'COMPANY_ID',
+        'TRACKING_ORDER'
+    );
+
     public function __construct()
     {
         $this->module_key = '0372c81a8fe76ebddb8ec637278afe98';
@@ -42,7 +50,7 @@ class Newsletter2Go extends Module
         $this->controllers = array('Export', 'Callback');
         parent::__construct();
         $this->displayName = $this->l('Newsletter2Go email marketing');
-        $this->description = $this->l('Adds email marketing functionality to your E-commerce platform. Easily synchronize your contacts and send product newsletters');
+        $this->description = $this->l('Adds email marketing functionality to your E-commerce platform');
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
         if (!Configuration::get('NEWSLETTER2GO_NAME')) {
             $this->warning = $this->l('No name provided');
@@ -61,9 +69,9 @@ class Newsletter2Go extends Module
         $parent_tab->add();
 
         return parent::install()
-            && $this->registerUrls()
-            && $this->registerHook('backOfficeHeader')
-            && $this->registerHook('displayOrderConfirmation');
+        && $this->registerUrls()
+        && $this->registerHook('backOfficeHeader')
+        && $this->registerHook('displayOrderConfirmation');
     }
 
     public function uninstall()
@@ -85,8 +93,17 @@ class Newsletter2Go extends Module
     public function hookBackOfficeHeader()
     {
         $param = md5(time());
-        $this->context->controller->addJS($this->_path . 'views/js/nl2go_script.js?param=' . $param, false);
-        $this->context->controller->addCSS($this->_path . 'views/css/menuTabIcon.css?param=' . $param, 'all', null, false);
+        $this->context->controller->addJS(
+            $this->_path . 'views/js/nl2go_script.js?param=' .
+            $param,
+            false
+        );
+        $this->context->controller->addCSS(
+            $this->_path . 'views/css/menuTabIcon.css?param=' . $param,
+            'all',
+            null,
+            false
+        );
     }
 
     /**
